@@ -1,0 +1,50 @@
+
+<h2><%= @article.title %></h2>
+
+<% begin %>
+  <%= image_tag @article.imagePath, height: 300 %>
+<% rescue => exception %>
+  <%= image_tag "http://localhost:3000/assets/images.png", height: 300 %>
+<% end %>
+
+
+<h3><%= @article.body %></h3>
+
+
+&nbsp <%= link_to "Edit", edit_article_path(@article) %> &nbsp
+
+<%= link_to "Destroy", article_path(@article), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %> <br><br>
+
+
+&nbsp <%= link_to "Home Page", root_path %>
+
+
+
+<h2> Comments </h2> 
+<% @article.comments.each do |comment|%>
+<% if comment.parent_id == nil %>
+  <strong>
+   <%= comment.commenter %>:
+  </strong> 
+   <%= comment.body %><br>
+   
+   <%# <%= render 'comments/comments2', comment: comment %> 
+   <%= link_to "reply", new_article_comment_path(@article, parent_id: comment.id), remote: true %>
+    <%# <%= link_to "Reply", article_comment_path(comment)"/new" %> &nbsp &nbsp
+    <%= link_to "Delete Comment", article_comment_path(comment), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %><br>
+
+  <%# <a href="<%= render 'comments/comments2' %>
+
+   <% comment.comments.each do |comm| %>
+     <strong>
+      &nbsp &nbsp <%= comm.commenter%>:
+     </strong> 
+      &nbsp <%= comm.body %>  
+      <br>
+   <% end %>
+<% end %>   
+<% end %>
+
+<h2> Add a Comment </h2>
+<%= render 'comments/form', article: @article %>
+
