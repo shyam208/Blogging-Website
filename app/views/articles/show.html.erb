@@ -1,3 +1,4 @@
+<%# user's section of articles and his control over articles %>
 
 <h2><%= @article.title %></h2>
 
@@ -10,41 +11,42 @@
 
 <h3><%= @article.body %></h3>
 
+<%# link to edit user's article %>
+&nbsp <%= link_to "Edit", edit_user_article_path(@user.id, @article.id) %> &nbsp
 
-&nbsp <%= link_to "Edit", edit_article_path(@article) %> &nbsp
-
-<%= link_to "Destroy", article_path(@article), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %> <br><br>
-
+<%# link to delete user's article %>
+<%= link_to "Destroy", user_article_path(@user.id, @article), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %> <br><br>
 
 &nbsp <%= link_to "Home Page", root_path %>
 
 
+<%# comment to articles  %>
 
 <h2> Comments </h2> 
 <% @article.comments.each do |comment|%>
-<% if comment.parent_id == nil %>
-  <strong>
-   <%= comment.commenter %>:
+  <% if comment.parent_id == nil %>
+  <%# first level of comment  %>
+  <strong> 
+  <%= comment.commenter %>:
   </strong> 
-   <%= comment.body %><br>
-   
-   <%# <%= render 'comments/comments2', comment: comment %> 
-   <%= link_to "reply", new_article_comment_path(@article, parent_id: comment.id), remote: true %>
-    <%# <%= link_to "Reply", article_comment_path(comment)"/new" %> &nbsp &nbsp
-    <%= link_to "Delete Comment", article_comment_path(comment), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %><br>
+  <%= comment.body %><br>
 
-  <%# <a href="<%= render 'comments/comments2' %>
+<%# <%= link_to "reply", new_user_article_comment_path(@user, @article, article_id: @article.id, parent_id: comment.id), remote: true %> 
+<%# <%= link_to "Delete Comment", user_article_comment_path(user_id: params[:user_id], article_id: @article.id, id: comment.id), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %> 
 
-   <% comment.comments.each do |comm| %>
-     <strong>
-      &nbsp &nbsp <%= comm.commenter%>:
-     </strong> 
-      &nbsp <%= comm.body %>  
-      <br>
-   <% end %>
+<%# second level of comment %>
+<% comment.comments.each do |comm| %>
+  <strong>
+  &nbsp &nbsp <%= comm.commenter%>:
+  </strong> 
+  &nbsp <%= comm.body %>  
+  <br>
+<% end %> 
 <% end %>   
-<% end %>
-
-<h2> Add a Comment </h2>
-<%= render 'comments/form', article: @article %>
+<% end %> 
+ 
+ <%# add new comment  %>
+ <%# <h2> Add a Comment </h2> %>
+ <%# <%= render 'comments/form', user: @user, article: @article, article_id: @article.id, parent_id: nil %> 
+ <%# <%= link_to "Comment", new_user_article_comment_path(@user, @article, article_id: @article.id, parent_id: nil), remote: true %>  
 

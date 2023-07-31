@@ -1,8 +1,8 @@
+<%# <% second level comment form %> 
 
-<%# <% Comment's Reply Form %> 
-
-<%= form_with(model: [ @article, @comment ]) do |form| %>
+<%= form_with model: [@user, @article, @comment ] do |form| %>
 <%= form.hidden_field :parent_id %>
+<%= form.hidden_field :article_id %>
  <p>
    <%= form.label :commenter %><br>
    <%= form.text_field :commenter %>

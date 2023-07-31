@@ -55,6 +55,7 @@ gem 'image_processing', '~> 1.12', '>= 1.12.1'
 # ‍{% code-block-end %}
 
 gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
