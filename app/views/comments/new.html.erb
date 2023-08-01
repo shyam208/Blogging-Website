@@ -1,0 +1,17 @@
+<%# <% second level comment form %> 
+
+<%= form_with model: [@user, @article, @comment ] do |form| %>
+<%= form.hidden_field :parent_id %>
+<%= form.hidden_field :article_id %>
+ <p>
+   <%= form.label :commenter %><br>
+   <%= form.text_field :commenter %>
+ </p>
+ <p>
+   <%= form.label :body %><br>
+   <%= form.text_area :body %>
+ </p>
+ <p>
+   <%= form.submit %>
+ </p>
+<% end %>
