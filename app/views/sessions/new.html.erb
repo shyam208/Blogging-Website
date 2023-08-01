@@ -1,0 +1,21 @@
+<%# sign in form %>
+
+<h1> Sign In </h1>
+
+<%= form_with url: sessions_new_path do |form| %>
+<div>
+  <%= form.label :email %><br>
+  <%= form.text_field :email, id: 'email' %>
+</div>
+
+<div>
+  <%= form.label :password %><br>
+  <%= form.password_field :password, id: 'password' %>
+</div>
+
+<div>
+ <%= form.submit "Log In!!" %> <br><br>
+ <%= link_to "Home Page", root_path %>
+</div>
+
+<%end%>

@@ -1,0 +1,18 @@
+<%# <p style="color: red"><%= alert %>
+<%# <p style="color: green"><%= notice %>
+
+<%# display user's articles and link to add new article and link of blog %>
+<h2> <%= @user.email %>'s Articles </h2> 
+
+<% @articles.each do |article| %>
+<li>
+<% next if article.id.nil? %>
+<%= link_to article.title, user_article_path(@user.id, article.id) %> <br>
+</li>
+<%end%>
+
+<br>
+<%= link_to "Add New Article", new_user_article_path %><br><br>
+
+<%= link_to 'Blogs', '/articles/index' %> <br><br>
+<%= link_to "Home Page", root_path %>

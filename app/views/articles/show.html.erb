@@ -1,0 +1,65 @@
+<%# user's section of articles and his control over articles %>
+
+<h2><%= @article.title %></h2>
+
+<% begin %>
+  <%= image_tag @article.imagePath, height: 300 %>
+<% rescue => exception %>
+  <%= image_tag "http://localhost:3000/assets/images.png", height: 300 %>
+<% end %>
+
+
+<h3><%= @article.body %></h3>
+
+<%# link to edit user's article %>
+&nbsp <%= link_to "Edit", edit_user_article_path(@user.id, @article.id) %> &nbsp
+
+<%# link to delete user's article %>
+<%= link_to "Destroy", user_article_path(@user.id, @article), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %> <br><br>
+
+&nbsp <%= link_to "Home Page", root_path %>
+
+
+<%# comment to articles  %>
+
+<h2> Comments </h2> 
+
+<%# <%= render "comments/comment", comm: @article.comments, parent_id: nil %> 
+<%# <% byebug %> 
+
+<% @article.comments.each do |comment|%>
+
+<%# first level of comment %>
+<% if comment.parent_id == nil %>
+   <strong> 
+   <%= comment.commenter %>:
+   </strong> 
+   <%= comment.body %><br>
+
+   <%# reply link %>
+   <%= link_to "reply", new_user_article_comment_path(@user, @article, article_id: @article.id, parent_id: comment.id), remote: true %> <br>
+   <%# <%= link_to "Delete Comment", user_article_comment_path(@user, @article, comment), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %> 
+    
+    <%# second level of comment %>
+    <% comment.comments.each do |comm| %>
+     <strong>
+      &nbsp &nbsp <%= comm.commenter%>:
+     </strong> 
+      &nbsp <%= comm.body %>  
+      <br>
+   <% end %>
+   <br> 
+ <% end %>   
+ <% end %> 
+ 
+
+
+ 
+
+
+ <%# add new comment  %>
+ <h2> Add a Comment </h2>
+ <%# <%= render 'comments/form', user: @user, article: @article, article_id: @article.id, parent_id: nil %> 
+ <%= render 'comments/form', user: @user, article: @article, article_id: @article.id, parent_id: nil %>
+ <%# <%= link_to "Comment", new_user_article_comment_path(@user, @article, article_id: @article.id, parent_id: nil), remote: true  %> 
+

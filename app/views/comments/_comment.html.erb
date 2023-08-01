@@ -1,0 +1,15 @@
+<% unless comment.parent_id %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+    <br> <%= link_to "Reply " ,new_user_article_comment_path(user_id: params[:user_id], article_id: comment.article_id, parent_id: comment.id) %>
+  </p>
+
+  <%= render partial: "subcomments", locals: {user_id: params[:user_id], article_id: comment.article_id, comment: comment} %>
+
+<% end%>
